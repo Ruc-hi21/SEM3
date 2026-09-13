@@ -1,13 +1,12 @@
 
 
 
-import {configureStore} from '@reduxjs/toolkit'
-import teaSlice from './teaSlice'
+import {configureStore} from '@reduxjs/toolkit';
+import issSlice from './issSlice';
 
-const store=configureStore({
+export const store=configureStore({
     reducer:{
-        tea:teaSlice
+        satelite:issSlice
     }
 })
 
-export default store
