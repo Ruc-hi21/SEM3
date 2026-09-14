@@ -1,41 +1,53 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchlocation } from './redux/issSlice'
+import { fetchPokemon, toggleFavorite } from './redux/pokemonSlice'
+import PokemonCard from './components/PokemonCard'
+import Loader from './components/Loader'
+import ErrorMessage from './components/ErrorMessage'
 import './App.css'
 
 function App() {
-  const disptach = useDispatch()
-  const satelite = useSelector(state => state.satelite);
+  const dispatch = useDispatch()
+  const { list, status, error, favorites } = useSelector((state) => state.pokemon)
 
- const angle = satelite.response
-  ? (((parseFloat(satelite.response.longitude) + 180) / 360) * 360 * 7) % 360
-  : 0;
+  useEffect(() => {
+    if (status === 'idle') dispatch(fetchPokemon())
+  }, [status, dispatch])
+
   return (
     <div className="app">
-      <h1>ISS Live Tracker</h1>
-
-      <button onClick={() => disptach(fetchlocation())} disabled={satelite.status === 'Loading'}>
-        {satelite.status === 'Loading' ? 'Locating...' : 'Fetch Satellite Location'}
-      </button>
-
-      <div className="earth-wrap">
-        <div className="earth"></div>
-        <div className="orbit">
-          {satelite.response && (
-            <div
-              className="satellite"
-              style={{ transform: `rotate(${angle}deg) translateX(100px) rotate(-${angle}deg)` }}
-            ></div>
+      <header className="app__header">
+        <div className="app__header-inner">
+          <div className="app__brand">
+            <span className="app__ball" aria-hidden="true" />
+            <h1 className="app__title">PokéDex</h1>
+          </div>
+          {status === 'succeeded' && (
+            <span className="app__count">{list.length} Pokémon</span>
           )}
         </div>
-      </div>
+      </header>
 
-      <p className="status-text">{satelite.status}</p>
+      <main className="app__main">
+        {status === 'loading' && <Loader />}
 
-      {satelite.response && (
-        <p className="coords">
-          Lat: {satelite.response.latitude} | Long: {satelite.response.longitude}
-        </p>
-      )}
+        {status === 'failed' && (
+          <ErrorMessage message={error} onRetry={() => dispatch(fetchPokemon())} />
+        )}
+
+        {status === 'succeeded' && (
+          <div className="grid">
+            {list.map((pokemon) => (
+              <PokemonCard
+                key={pokemon.id}
+                pokemon={pokemon}
+                isFavorite={favorites.includes(pokemon.id)}
+                onToggleFavorite={() => dispatch(toggleFavorite(pokemon.id))}
+              />
+            ))}
+          </div>
+        )}
+      </main>
     </div>
   )
 }
