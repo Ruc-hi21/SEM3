@@ -49,31 +49,6 @@
       "id": "10",
       "name": "Captain Marvel",
       "picture": "https://cdn.mos.cms.futurecdn.net/aCteqtgp7dSMNr7VkX4CXQ-575-80.jpeg"
-    },
-    {
-      "id": "LzI2CZO6gPE",
-      "name": "shaktiman",
-      "picture": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ_Zuz3haRHrSz0f3bnMlUTGa14Qc7Z5LLQ3-l04P98hv9CMXQU"
-    },
-    {
-      "id": "0MovE-7Tt5I",
-      "name": "Hero",
-      "picture": "xyz.com"
-    },
-    {
-      "id": "sArSnM4RvDw",
-      "name": "Hero",
-      "picture": "xyz.com"
-    },
-    {
-      "id": "z9aJTKC2VU0",
-      "name": "Hero",
-      "picture": "xyz.com"
-    },
-    {
-      "id": "oY4xQfKxwGo",
-      "name": "Hero",
-      "picture": "xyz.com"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
